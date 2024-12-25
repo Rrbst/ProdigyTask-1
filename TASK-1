@@ -1,0 +1,202 @@
+import pandas as pd
+
+# File path
+file_path = "API_SP.POP.TOTL_DS2_en_csv_v2_56[1].csv"
+
+# Read the file, skipping the metadata rows
+try:
+    # Skip the metadata rows (first 4 rows)
+    df = pd.read_csv(file_path, skiprows=4, engine="python")
+
+    # Display basic info about the DataFrame
+    print("Data Loaded Successfully!\n")
+    print("Columns in the file:")
+    print(df.columns)
+
+    # Display the first 5 rows
+    print("\nFirst 5 Rows of the DataFrame:")
+    print(df.head())
+
+except pd.errors.ParserError as e:
+    print(f"\nParserError occurred: {e}")
+except Exception as e:
+    print(f"\nAn unexpected error occurred: {e}")
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# --- Load the File ---
+file_path = "API_SP.POP.TOTL_DS2_en_csv_v2_56[1].csv"  # Replace with the path to your file
+
+# Try loading the file as a CSV or Excel (handles incorrect extensions)
+try:
+    df = pd.read_csv(file_path, encoding='latin1')  # Load as CSV
+    print("File loaded as CSV successfully!")
+except Exception as e:
+    try:
+        df = pd.read_excel(file_path, engine='openpyxl')  # Load as Excel
+        print("File loaded as Excel successfully!")
+    except Exception as e:
+        print("Error loading file:", e)
+        exit()
+
+# --- Display File Info ---
+print("\n--- First 5 Rows of the DataFrame ---\n")
+print(df.head())
+print("\n--- Column Names in the DataFrame ---\n")
+print(df.columns)
+
+# --- Bar Chart for Categorical Column ---
+categorical_column = 'Gender'  # Replace with a valid categorical column name from your file
+if categorical_column in df.columns:
+    plt.figure(figsize=(8, 5))
+    category_counts = df[categorical_column].value_counts()  # Count of each category
+    category_counts.plot(kind='bar', color='skyblue', edgecolor='black')
+    plt.title(f'Distribution of {categorical_column}')
+    plt.xlabel(categorical_column)
+    plt.ylabel('Count')
+    plt.xticks(rotation=0)
+    plt.show()
+else:
+    print(f"Column '{categorical_column}' not found in the file.")
+
+# --- Histogram for Continuous Column ---
+continuous_column = 'Age'  # Replace with a valid continuous column name from your file
+if continuous_column in df.columns:
+    plt.figure(figsize=(8, 5))
+    plt.hist(df[continuous_column].dropna(), bins=10, color='orange', edgecolor='black')
+    plt.title(f'Distribution of {continuous_column}')
+    plt.xlabel(continuous_column)
+    plt.ylabel('Frequency')
+    plt.show()
+else:
+    print(f"Column '{continuous_column}' not found in the file.")
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# --- Load the File ---
+file_path = "Metadata_Country_API_SP.POP.TOTL_DS2_en_csv_v2_56[1].csv"  # Replace with the path to your file
+
+# Load the CSV file
+try:
+    df = pd.read_csv(file_path, encoding='latin1')  # Load as CSV
+    print("File loaded successfully!")
+except Exception as e:
+    print("Error loading file:", e)
+    exit()
+
+# --- Display File Info ---
+print("\n--- Column Names in the DataFrame ---\n")
+print(df.columns)
+
+print("\n--- First 5 Rows of the DataFrame ---\n")
+print(df.head())
+
+# --- Bar Chart for Categorical Column ---
+categorical_column = 'Country Name'  # Replace with a valid categorical column name from your file
+if categorical_column in df.columns:
+    plt.figure(figsize=(10, 6))
+    category_counts = df[categorical_column].value_counts().head(10)  # Count of top 10 categories
+    category_counts.plot(kind='bar', color='skyblue', edgecolor='black')
+    plt.title(f'Distribution of {categorical_column}')
+    plt.xlabel(categorical_column)
+    plt.ylabel('Count')
+    plt.xticks(rotation=45)
+    plt.show()
+else:
+    print(f"Column '{categorical_column}' not found in the file.")
+
+# --- Histogram for Continuous Column ---
+continuous_column = '2022'  # Replace with a valid continuous column name (like a year) from your file
+if continuous_column in df.columns:
+    plt.figure(figsize=(10, 6))
+    plt.hist(df[continuous_column].dropna(), bins=10, color='orange', edgecolor='black')
+    plt.title(f'Distribution of {continuous_column}')
+    plt.xlabel(continuous_column)
+    plt.ylabel('Frequency')
+    plt.show()
+else:
+    print(f"Column '{continuous_column}' not found in the file.")
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# --- Load the File ---
+file_path = "Metadata_Country_API_SP.POP.TOTL_DS2_en_csv_v2_56[1].csv"  # Replace with the path to your file
+
+# Load the CSV file
+try:
+    df = pd.read_csv(file_path, encoding='latin1')  # Load as CSV
+    print("File loaded successfully!")
+except Exception as e:
+    print("Error loading file:", e)
+    exit()
+
+# --- Display File Info ---
+print("\n--- Column Names in the DataFrame ---\n")
+print(df.columns)
+
+print("\n--- First 5 Rows of the DataFrame ---\n")
+print(df.head())
+
+# Rename the misencoded column name if required (fixes "ï»¿"Country Code"")
+df.rename(columns={df.columns[0]: 'Country Code'}, inplace=True)
+
+# --- Bar Chart for Categorical Column ---
+categorical_column = 'Region'  # Using 'Region' as the categorical column
+if categorical_column in df.columns:
+    plt.figure(figsize=(10, 6))
+    category_counts = df[categorical_column].value_counts().head(10)  # Count of top 10 categories
+    category_counts.plot(kind='bar', color='skyblue', edgecolor='black')
+    plt.title(f'Distribution of {categorical_column}')
+    plt.xlabel(categorical_column)
+    plt.ylabel('Count')
+    plt.xticks(rotation=45)
+    plt.show()
+else:
+    print(f"Column '{categorical_column}' not found in the file.")
+
+# --- Bar Chart for Another Categorical Column (IncomeGroup) ---
+categorical_column_2 = 'IncomeGroup'  # Using 'IncomeGroup' as the categorical column
+if categorical_column_2 in df.columns:
+    plt.figure(figsize=(10, 6))
+    category_counts_2 = df[categorical_column_2].value_counts()  # Count all categories
+    category_counts_2.plot(kind='bar', color='lightgreen', edgecolor='black')
+    plt.title(f'Distribution of {categorical_column_2}')
+    plt.xlabel(categorical_column_2)
+    plt.ylabel('Count')
+    plt.xticks(rotation=45)
+    plt.show()
+else:
+    print(f"Column '{categorical_column_2}' not found in the file.")
+
+# --- Histogram for Frequency of 'Region' ---
+categorical_column_3 = 'Region'  # Using 'Region' as a categorical column for histogram
+if categorical_column_3 in df.columns:
+    plt.figure(figsize=(10, 6))
+    df[categorical_column_3].value_counts().plot(kind='hist', bins=10, color='orange', edgecolor='black')
+    plt.title(f'Frequency Distribution of {categorical_column_3}')
+    plt.xlabel('Regions')
+    plt.ylabel('Frequency')
+    plt.show()
+else:
+    print(f"Column '{categorical_column_3}' not found in the file.")
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+df = pd.read_csv('Metadata_Indicator_API_SP.POP.TOTL_DS2_en_csv_v2_56[1].csv')
+
+# Visualization of the categorical variable (INDICATOR_NAME)
+plt.figure(figsize=(10,6))
+sns.countplot(data=df, x='INDICATOR_NAME', palette='Set2')
+plt.title('Distribution of Indicator Names')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.show()
+
+# Visualization of the continuous/categorical variable (INDICATOR_CODE)
+plt.figure(figsize=(10,6))
+sns.histplot(df['INDICATOR_CODE'], kde=True, bins=10, color='skyblue')  # Adjust bins based on data
+plt.title('Distribution of Indicator Codes')
+plt.tight_layout()
+plt.show()
